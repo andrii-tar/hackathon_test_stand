@@ -1,0 +1,20 @@
+version: 1.0
+runtime: python3
+build:
+  commands:
+    # 1. Create a virtual environment named 'venv'
+    pre_build:
+      - python3 -m venv venv 
+
+    # 2. Activate the virtual environment and use its pip3
+    # Note: Activating changes the shell's environment variables.
+    build:
+      - source venv/bin/activate 
+      - pip3 install -r requirements.txt
+      - deactivate
+      
+run:
+  # 3. Use the Python3 interpreter directly from the virtual environment
+  command: venv/bin/python3 -m uvicorn main:app --host 0.0.0.0 --port 8080
+  network:
+    port: 8080
